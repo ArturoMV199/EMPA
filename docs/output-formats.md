@@ -149,9 +149,11 @@ They are NOT templates to fill manually — Claude produces them from conversati
 | Infrastructure | [Name] | [Name] |
 | QA | [Name] | [Name] |
 
-### Third-Party Services
-| Service | Provider | Purpose | Cost |
-|---------|----------|---------|------|
+### Third-Party Services & Libraries
+| Service/Library | Purpose (plain language) | License | Cost | Alternative |
+|-----------------|------------------------|---------|------|-------------|
+
+*Always explain what each library does in plain language. Include license type (MIT, Apache 2.0, GPL, Commercial, Freemium). If a library has a free tier and a paid tier, explain the difference and when you'd need the paid version.*
 
 ### Architecture Diagram
 [ASCII diagram of components]
@@ -218,16 +220,18 @@ prototype/
 **MVP goal:** [Minimum deliverable]
 
 ### MVP Scope (Must Have)
-| # | Module | Task | Owner | Complexity | Est. Hours | Factor | Adjusted |
-|---|--------|------|-------|------------|------------|--------|----------|
+| # | Module | Task | Owner | Complexity | Est. Hours | Factor | Adjusted | Source |
+|---|--------|------|-------|------------|------------|--------|----------|--------|
+
+*Source column: "Client-requested" for features explicitly asked by client, "Suggested enhancement" for team additions*
 
 ### Post-MVP (Should Have)
-| # | Module | Task | Owner | Complexity | Est. Hours | Factor | Adjusted |
-|---|--------|------|-------|------------|------------|--------|----------|
+| # | Module | Task | Owner | Complexity | Est. Hours | Factor | Adjusted | Source |
+|---|--------|------|-------|------------|------------|--------|----------|--------|
 
 ### Backlog (Could Have)
-| # | Task |
-|---|------|
+| # | Task | Source |
+|---|------|--------|
 
 ### Out of Scope (Won't Have)
 - [Item]

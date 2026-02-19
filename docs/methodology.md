@@ -116,6 +116,27 @@ Claude has comprehensive internal checklists covering:
 6. Recommend one option with reasoning
 7. Team discusses and decides
 
+**Third-Party Libraries & Licensing — Always Document:**
+
+Every architecture decision MUST include a clear table of third-party libraries with their license type, cost, and alternatives. This is critical for client transparency and informed decision-making.
+
+For each library, specify:
+- **License type** (MIT, Apache 2.0, GPL, Commercial, Freemium, etc.)
+- **Cost** ($0/free, per-dev/year, per-project, enterprise pricing)
+- **What it does** in plain language (not everyone knows what "AG Grid" means)
+- **Alternatives** if the primary choice doesn't work out
+- **When the decision needs to be made** (Sprint 0 evaluation, before coding, etc.)
+
+Example format:
+```
+| Library | Purpose | License | Cost | Alternative |
+|---------|---------|---------|------|-------------|
+| MudBlazor | UI components + data grid | MIT (free, open source) | $0 | Radzen (free), Telerik (~$1K/dev/yr) |
+| EPPlus | Excel file parsing | Polyform Noncommercial | $0 for non-commercial | ClosedXML (MIT, free) |
+```
+
+**Why this matters:** Clients and managers often don't know what these libraries are. A row that says "AG Grid Enterprise — $1,100/dev" with no context is confusing. Always explain what it does and why it's needed.
+
 **Output:** `architecture-decision.md`
 
 **Start with:** "Charter is approved. Let's decide the architecture." (upload technical docs if you have them)
@@ -255,6 +276,12 @@ prototype/
 - **Should have** = Post-MVP (important, can wait)
 - **Could have** = Backlog (nice to have)
 - **Won't have** = Out of scope
+
+**Critical MoSCoW rule:** If the client explicitly requested a feature (in a transcript, scoping call, or requirements doc), it goes in **Must Have (MVP)** — even if it's complex. Features that Claude or the team suggest as enhancements go in **Should Have** or **Could Have**, clearly labeled as "Suggested enhancement" vs "Client-requested." This distinction must be visible in the estimation so the client and management know what they asked for vs what extra value the team is offering.
+
+Example labels in estimation tables:
+- `Client-requested` — Feature explicitly asked for by client
+- `Suggested enhancement` — Added by team as value-add, not requested
 
 **Output:** `estimation.md` with MVP, team allocation, and timeline
 
