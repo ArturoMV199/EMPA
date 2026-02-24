@@ -377,3 +377,88 @@ Would we use the same environment setup? [Yes / No / With changes]
 ## Recommendations
 1. [Item]
 ```
+
+---
+
+## 7. Scope Change Register
+
+Tracks every scope change tied to a specific client answer, stakeholder decision, or discovery finding. Generated automatically from a JSON data file — never written manually.
+
+**When to use:** Every time a client Q&A answer, stakeholder decision, or discovery finding changes the estimation scope. Run after each batch of answers.
+
+**Change types:**
+- `confirmed` — Client answer validates an existing assumption (0 hrs impact)
+- `added` — New scope added based on client answer
+- `modified` — Existing scope changed (hours may increase or decrease)
+- `removed` — Scope removed based on client answer
+
+```json
+{
+  "project": "EMPA-[ProjectName] — [Description]",
+  "option": "[Selected architecture option]",
+  "baseline": {
+    "date": "YYYY-MM-DD",
+    "mvpHours": 0,
+    "postMvpHours": 0,
+    "learningHours": 0,
+    "fullScopeHours": 0,
+    "note": "Initial estimation before client Q&A."
+  },
+  "changes": [
+    {
+      "id": "SC-001",
+      "date": "YYYY-MM-DD",
+      "batch": "Client Q&A — Answers A1–A10",
+      "items": [
+        {
+          "trigger": "A1 — [Question Topic]",
+          "clientAnswer": "[Exact client response — serves as evidence]",
+          "changeType": "confirmed | added | modified | removed",
+          "description": "[What changed in the estimation]",
+          "estimationItems": ["#N Task name (X hrs)"],
+          "hoursAdded": 0,
+          "hoursRemoved": 0,
+          "netImpact": 0,
+          "module": "[Module name from estimation]"
+        }
+      ],
+      "summary": {
+        "totalAdded": 0,
+        "totalRemoved": 0,
+        "netImpact": 0,
+        "mvpBefore": 0,
+        "mvpAfter": 0,
+        "fullScopeBefore": 0,
+        "fullScopeAfter": 0,
+        "note": "[Summary of batch impact]"
+      }
+    }
+  ]
+}
+```
+
+**Key rules:**
+- Every client answer gets an entry — even if impact is 0 hrs (use `confirmed`)
+- `clientAnswer` is the verbatim client response (evidence trail)
+- `estimationItems` reference specific line items from `estimation.md`
+- Each batch gets a `summary` with before/after totals
+- Document includes cumulative impact table at the end
+- Generated as PDF + Word using the project's scope change generator script
+
+**Output:** `docs/SC_XXX/scope-changes.json` (data) → `scope-changes.docx` + `scope-changes.pdf` (generated per folder)
+
+**Generator:** `docs/gen-scope-changes.js` — shared script, run with `node gen-scope-changes.js SC_001`
+
+**Folder structure:**
+```
+docs/
+├── gen-scope-changes.js     ← shared generator
+├── SC_001/
+│   ├── scope-changes.json   ← data for batch 1
+│   ├── scope-changes.docx   ← generated
+│   └── scope-changes.pdf    ← generated
+├── SC_002/                  ← next batch
+│   ├── scope-changes.json
+│   ├── scope-changes.docx
+│   └── scope-changes.pdf
+```

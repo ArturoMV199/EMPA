@@ -19,12 +19,13 @@ Quick start: `docs/quick-start.md`
 ## EMPA Phases
 
 ```
-1. Discover  → project-charter.md
-2. Architect → architecture-decision.md
+1. Discover   → project-charter.md
+2. Architect  → architecture-decision.md
 2B. Prototype → prototype/ folder (HTML + inline SVGs + CSS variables)
-3. Estimate  → estimation.md
-4. Execute   → weekly-status.md (per week)
-5. Reflect   → lessons-learned.md
+3. Estimate   → estimation.md
+3B. Scope Changes → docs/SC_XXX/scope-changes.json → scope-changes.pdf/docx (ongoing)
+4. Execute    → weekly-status.md (per week)
+5. Reflect    → lessons-learned.md
 ```
 
 ---
@@ -70,5 +71,6 @@ When using this template for a real project, update this section:
 - **Language:** Documents and deliverables in English. Conversation can be in Spanish.
 - **Prototypes:** Raw HTML + custom CSS. Inline SVG icons ONLY — never Font Awesome or external icon CDNs. CSS variables for brand colors. Realistic placeholder data.
 - **Estimation:** Include ALL work — infra per environment, CI/CD, DevOps, QA, learning curve, bug buffer. Map tasks to team members.
+- **Scope Changes:** Every client answer gets logged in `scope-changes.json` — even 0-impact confirmations. Always quote the client's exact answer as evidence. Regenerate PDF/Word after each batch.
 - **Always read** `docs/methodology.md` before starting any EMPA phase.
 - **Update this file** after every major decision or phase completion.

@@ -289,6 +289,43 @@ Example labels in estimation tables:
 
 ---
 
+## Phase 3B: Scope Change Tracking (Ongoing)
+
+**Goal:** Maintain a living record of every scope change with full traceability to the client answer or decision that caused it.
+
+**Why this matters:** Estimation is never final after Phase 3. Client Q&A answers, stakeholder decisions, and discovery findings continuously reshape scope. Without a structured change log, hours creep silently and no one can explain why the project grew from 800 to 1,200 hours.
+
+**How it works:** Every time a client answers a discovery question or makes a decision that affects scope:
+
+1. Claude evaluates the impact on the estimation
+2. Each answer gets logged in `scope-changes.json` — even if impact is 0 hrs
+3. Changes are categorized: `confirmed` (validates assumption), `added` (new scope), `modified` (changed scope), `removed` (scope cut)
+4. The client's exact answer is quoted as evidence
+5. Affected estimation line items are referenced by number
+6. Before/after totals are calculated per batch and cumulatively
+
+**Change types:**
+
+| Type | Badge Color | Meaning | Example |
+|------|-------------|---------|---------|
+| `confirmed` | Blue | Client validates existing assumption | "Yes, 5 roles as described" → 0 hrs |
+| `added` | Green | New scope from client answer | "We need bid revision tracking" → +15 hrs |
+| `modified` | Orange | Existing scope changed | "Thresholds → visual only" → -9 hrs |
+| `removed` | Red | Scope removed by client decision | "Drop email notifications" → -18 hrs |
+
+**Process:**
+1. Receive client answers (batch or individual)
+2. Update `estimation.md` with new/changed items
+3. Add entries to `scope-changes.json` with trigger, client answer, impact
+4. Regenerate PDF + Word documents
+5. Update `CLAUDE.md` with new totals
+
+**Output:** `docs/SC_XXX/scope-changes.json` → `scope-changes.docx` + `scope-changes.pdf` (one folder per batch)
+
+**Start with:** "Client answered questions [X-Y]. Let's update the estimation and scope change register."
+
+---
+
 ## Phase 4: Execute (Claude-Assisted)
 
 **Goal:** Team executes while Claude tracks progress, flags drift, and helps with decisions.
