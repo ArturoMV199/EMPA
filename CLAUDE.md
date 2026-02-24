@@ -34,7 +34,7 @@ Quick start: `docs/quick-start.md`
 
 **Status:** Template repository — no active project yet
 **Current Phase:** N/A
-**Last Updated:** 2026-02-18
+**Last Updated:** 2026-02-24
 
 <!-- 
 When using this template for a real project, update this section:
