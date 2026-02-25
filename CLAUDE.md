@@ -69,8 +69,10 @@ When using this template for a real project, update this section:
 ## Rules for Claude
 
 - **Language:** Documents and deliverables in English. Conversation can be in Spanish.
-- **Prototypes:** Raw HTML + custom CSS. Inline SVG icons ONLY — never Font Awesome or external icon CDNs. CSS variables for brand colors. Realistic placeholder data.
+- **Prototypes:** Raw HTML + custom CSS. Inline SVG icons ONLY — never Font Awesome or external icon CDNs. CSS variables for brand colors. Fictional/invented placeholder data (never use real client data unless explicitly provided).
 - **Estimation:** Include ALL work — infra per environment, CI/CD, DevOps, QA, learning curve, bug buffer. Map tasks to team members.
 - **Scope Changes:** Every client answer gets logged in `scope-changes.json` — even 0-impact confirmations. Always quote the client's exact answer as evidence. Regenerate PDF/Word after each batch.
+- **EMPA is internal only:** Never include "EMPA" in client-facing deliverables (docs, PDFs, presentations). Use only the project name (e.g. "ReMarkets") and "Simpat Tech".
+- **Never change hours silently:** Always verify against official documents, flag discrepancies before acting, and get explicit approval before modifying any estimation figures.
 - **Always read** `docs/methodology.md` before starting any EMPA phase.
-- **Update this file** after every major decision or phase completion.
+- **Update this file** after every major decision or phase completion. When a new rule is created that affects deliverables or workflow, add it here too.
