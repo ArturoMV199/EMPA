@@ -37,9 +37,11 @@ CLAUDE: Analyzes results --> Evaluates decisions --> Improves future estimates
 | Phase | Who Drives | What Happens | Output |
 |-------|-----------|-------------|--------|
 | **1. Discover** | Claude asks, you answer | Business problem, scope, stakeholders | `project-charter.md` |
+| **1B. Discovery Q&A** | Claude generates, client answers | Open questions, gap analysis, risk identification | `discovery-questions.md` |
 | **2. Architect** | Claude analyzes, team decides | Stack, environments, CI/CD, team roles, cost | `architecture-decision.md` |
 | **2B. Prototype** | Claude builds, team reviews | Clickable HTML screens with professional look | `prototype/` folder |
 | **3. Estimate** | Claude proposes, team validates | All tasks mapped to people with hours and MVP | `estimation.md` |
+| **3B. Scope Changes** | Claude tracks, client triggers | Every Q&A answer logged with evidence and impact | `docs/SC_XXX/` |
 | **4. Execute** | Team works, Claude tracks | Weekly cycles with drift alerts | `weekly-status.md` |
 | **5. Reflect** | Claude analyzes, team learns | Metrics, tech assessment, improved factors | `lessons-learned.md` |
 
@@ -50,19 +52,27 @@ Full details: [docs/methodology.md](docs/methodology.md)
 ## Project Structure
 
 ```
-EMPA/
+EMPA-ProjectName/
 ├── docs/
 │   ├── methodology.md                   # EMPA methodology (5 phases + prototype)
 │   ├── claude-project-instructions.md   # Instructions for Claude.ai Projects
 │   ├── output-formats.md               # Document formats Claude generates
-│   └── quick-start.md                  # How to start a new project
-├── prototype/                           # Clickable HTML prototype (per project)
-├── index.html                           # Project dashboard
-├── css/styles.css                       # Base styles
-├── js/main.js                           # Main logic
-├── img/                                 # Visual assets
-├── assets/                              # Additional resources
-├── fonts/                               # Custom fonts
+│   ├── quick-start.md                  # How to start a new project
+│   ├── discovery-questions.md          # Living backlog of open questions
+│   ├── gen-scope-changes.js            # Word/PDF generator for scope changes
+│   ├── gen-estimation.js               # Word/PDF generator for estimation
+│   └── SC_XXX/                         # Scope change batches (one folder per batch)
+│       ├── scope-changes.json          # Change data with client evidence
+│       ├── scope-changes.docx          # Generated Word document
+│       └── scope-changes.pdf           # Generated PDF
+├── prototype/                           # Clickable HTML prototype
+│   ├── index.html                      # Login / landing
+│   ├── dashboard.html                  # Main dashboard
+│   ├── css/prototype.css               # Styles with CSS variables
+│   └── ...                             # Feature screens
+├── project-charter.md                   # Phase 1 output
+├── CLAUDE.md                            # Project state + rules for Claude Code
+├── package.json                         # npm config (docx dependency for generators)
 ├── .gitignore
 └── README.md
 ```
@@ -82,19 +92,35 @@ Full guide: [docs/quick-start.md](docs/quick-start.md)
 
 ## What Makes EMPA Different
 
-- **Claude is a team member, not a tool.** Claude drives discovery, challenges assumptions, flags risks, and generates all documentation from conversation.
+- **Claude is a team member, not a tool.** Claude drives discovery, challenges assumptions, flags risks, and generates all documentation from conversation. Claude also acts as Data Architect, UI/UX Designer, and Technical Architect when the team doesn't have dedicated resources.
+- **Evidence-based, never assumed.** Every decision, estimation, and scope change is traced back to documented evidence — transcripts, emails, or client answers. Nothing is guessed or invented.
 - **Architecture before estimation.** You can't estimate accurately without knowing the stack, environments, CI/CD, and team roles first.
-- **Visual prototypes sell projects.** Claude builds clickable HTML prototypes with inline SVGs, CSS variables, and realistic data — no wireframes, no mockups.
-- **Estimation includes everything.** Not just code — infra per environment, CI/CD pipelines, DevOps, QA, learning curve, bug buffer, all mapped to team members.
+- **Visual prototypes sell projects.** Claude builds clickable HTML prototypes with inline SVGs, CSS variables, and realistic data — no wireframes, no mockups. Clients believe it's a working app.
+- **Estimation includes everything.** Not just code — infra per environment, CI/CD pipelines, DevOps, QA, learning curve, bug buffer, all mapped to team members with MoSCoW prioritization.
+- **Scope changes are auditable.** Every client answer gets logged with exact quotes, impact analysis, and before/after totals. Word/PDF documents generated automatically.
 - **Continuous improvement.** Every project ends with a retrospective that updates estimation factors for the next one.
+
+---
+
+## Document Generators
+
+EMPA includes Node.js generators that produce professional Word/PDF documents:
+
+| Generator | Command | Output |
+|-----------|---------|--------|
+| Scope Change Register | `node docs/gen-scope-changes.js SC_001` | `docs/SC_001/scope-changes.docx` |
+| Estimation Document | `node docs/gen-estimation.js` | `docs/estimation.docx` |
+
+Convert to PDF: `libreoffice --headless --convert-to pdf <file.docx> --outdir <folder>`
 
 ---
 
 ## Projects Built with EMPA
 
-| Project | Repository | Stack | Status | Accuracy |
-|---------|------------|-------|--------|----------|
-| -       | -          | -     | -      | -        |
+| Project | Repository | Stack | Status | Phase |
+|---------|------------|-------|--------|-------|
+| ReMarkets — Bid Intelligence Platform | [EMPA-ReMarkets](https://github.com/ArturoMV199/EMPA-ReMarkets) | Blazor + .NET 10 + Azure SQL | Pre-Execution | Estimate complete (~998 MVP hrs) |
+| Celink | [EMPA-Celink](https://github.com/ArturoMV199/EMPA-Celink) | TBD | Pre-Discovery | Starting |
 
 ---
 
