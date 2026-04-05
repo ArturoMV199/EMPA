@@ -1,8 +1,10 @@
 # EMPA - Estimation Methodology Plus Assessments
 
-An AI-assisted project framework for small consulting and analysis teams (2-5 people). EMPA uses **Claude as an active team member** to drive discovery, architecture decisions, visual prototyping, estimation, tracking, and documentation through conversation.
+An AI-assisted project framework for small consulting and analysis teams (2-5 people). EMPA uses **Claude as an active team member** to drive discovery, architecture decisions, visual prototyping, estimation, tracking, and documentation.
 
 You bring the context. Claude asks the questions, recommends the tech stack, builds a clickable prototype, estimates the work, and tracks the project.
+
+**Everything runs in Claude Code. One tool, one workflow.**
 
 ---
 
@@ -32,20 +34,19 @@ CLAUDE: Analyzes results --> Evaluates decisions --> Improves future estimates
 
 ---
 
-## Methodology
+## Phases and Skills
 
-| Phase | Who Drives | What Happens | Output |
-|-------|-----------|-------------|--------|
-| **1. Discover** | Claude asks, you answer | Business problem, scope, stakeholders | `project-charter.md` |
-| **1B. Discovery Q&A** | Claude generates, client answers | Open questions, gap analysis, risk identification | `discovery-questions.md` |
-| **2. Architect** | Claude analyzes, team decides | Stack, environments, CI/CD, team roles, cost | `architecture-decision.md` |
-| **2B. Prototype** | Claude builds, team reviews | Clickable HTML screens with professional look | `prototype/` folder |
-| **3. Estimate** | Claude proposes, team validates | All tasks mapped to people with hours and MVP | `estimation.md` |
-| **3B. Scope Changes** | Claude tracks, client triggers | Every Q&A answer logged with evidence and impact | `docs/SC_XXX/` |
-| **4. Execute** | Team works, Claude tracks | Weekly cycles with drift alerts | `weekly-status.md` |
-| **5. Reflect** | Claude analyzes, team learns | Metrics, tech assessment, improved factors | `lessons-learned.md` |
+Each phase is a skill — a packaged process Claude follows step by step. Only the skill for the current phase is loaded.
 
-Full details: [docs/methodology.md](docs/methodology.md)
+| Phase | Skill | Output |
+|-------|-------|--------|
+| **1. Discover** | `skills/run-discovery.md` | `project-charter.md`, `discovery-questions.md` |
+| **2. Architect** | `skills/run-architecture.md` | `architecture-decision.md` |
+| **2B. Prototype** | `skills/build-prototype.md` | `prototype/` |
+| **3. Estimate** | `skills/run-estimation.md` | `estimation.md` |
+| **3B. Scope Changes** | `skills/track-scope-changes.md` | `docs/SC_XXX/` |
+| **4. Execute** | `skills/run-execution.md` | `weekly-status-wXX.md` |
+| **5. Reflect** | `skills/run-retrospective.md` | `lessons-learned.md` |
 
 ---
 
@@ -53,28 +54,25 @@ Full details: [docs/methodology.md](docs/methodology.md)
 
 ```
 EMPA-ProjectName/
+├── CLAUDE.md                    <- The map — Claude reads this first
+├── contexts/
+│   └── empa-project.md          <- Project state, phase tracking, wired skills
+├── skills/
+│   ├── run-discovery.md         <- Phase 1: Discover + Discovery Q&A
+│   ├── run-architecture.md      <- Phase 2: Architecture decisions
+│   ├── build-prototype.md       <- Phase 2B: Clickable HTML prototype
+│   ├── run-estimation.md        <- Phase 3: Full estimation with MoSCoW
+│   ├── track-scope-changes.md   <- Phase 3B: Scope change audit trail
+│   ├── run-execution.md         <- Phase 4: Weekly tracking and drift
+│   └── run-retrospective.md     <- Phase 5: Lessons learned
 ├── docs/
-│   ├── methodology.md                   # EMPA methodology (5 phases + prototype)
-│   ├── claude-project-instructions.md   # Instructions for Claude.ai Projects
-│   ├── output-formats.md               # Document formats Claude generates
-│   ├── quick-start.md                  # How to start a new project
-│   ├── discovery-questions.md          # Living backlog of open questions
-│   ├── gen-scope-changes.js            # Word/PDF generator for scope changes
-│   ├── gen-estimation.js               # Word/PDF generator for estimation
-│   └── SC_XXX/                         # Scope change batches (one folder per batch)
-│       ├── scope-changes.json          # Change data with client evidence
-│       ├── scope-changes.docx          # Generated Word document
-│       └── scope-changes.pdf           # Generated PDF
-├── prototype/                           # Clickable HTML prototype
-│   ├── index.html                      # Login / landing
-│   ├── dashboard.html                  # Main dashboard
-│   ├── css/prototype.css               # Styles with CSS variables
-│   └── ...                             # Feature screens
-├── project-charter.md                   # Phase 1 output
-├── CLAUDE.md                            # Project state + rules for Claude Code
-├── package.json                         # npm config (docx dependency for generators)
-├── .gitignore
-└── README.md
+│   ├── quick-start.md           <- How to start a new project
+│   ├── gen-scope-changes.js     <- Word/PDF generator for scope changes
+│   └── gen-estimation.js        <- Word/PDF generator for estimation
+├── prototype/                   <- Clickable HTML prototype
+├── README.md
+├── package.json
+└── .gitignore
 ```
 
 ---
@@ -82,9 +80,9 @@ EMPA-ProjectName/
 ## Quick Start
 
 1. **Use this template** → Click "Use this template" → name it `EMPA-ProjectName`
-2. **Create a Claude.ai Project** → paste instructions from `docs/claude-project-instructions.md`
-3. **Upload your project context** (emails, briefs, SOWs, technical docs)
-4. **Start:** "Claude, we have a new EMPA project. Here's what we know: [context]"
+2. **Clone and open in Claude Code**
+3. **Tell Claude:** "We have a new EMPA project. Here's what we know: [context]"
+4. **Follow the phases** — each skill tells Claude what to do next
 
 Full guide: [docs/quick-start.md](docs/quick-start.md)
 
@@ -92,19 +90,18 @@ Full guide: [docs/quick-start.md](docs/quick-start.md)
 
 ## What Makes EMPA Different
 
-- **Claude is a team member, not a tool.** Claude drives discovery, challenges assumptions, flags risks, and generates all documentation from conversation. Claude also acts as Data Architect, UI/UX Designer, and Technical Architect when the team doesn't have dedicated resources.
-- **Evidence-based, never assumed.** Every decision, estimation, and scope change is traced back to documented evidence — transcripts, emails, or client answers. Nothing is guessed or invented.
-- **Architecture before estimation.** You can't estimate accurately without knowing the stack, environments, CI/CD, and team roles first.
-- **Visual prototypes sell projects.** Claude builds clickable HTML prototypes with inline SVGs, CSS variables, and realistic data — no wireframes, no mockups. Clients believe it's a working app.
-- **Estimation includes everything.** Not just code — infra per environment, CI/CD pipelines, DevOps, QA, learning curve, bug buffer, all mapped to team members with MoSCoW prioritization.
-- **Scope changes are auditable.** Every client answer gets logged with exact quotes, impact analysis, and before/after totals. Word/PDF documents generated automatically.
+- **Claude is a team member, not a tool.** Claude drives discovery, challenges assumptions, flags risks, and generates all documentation. Claude also acts as Data Architect, UI/UX Designer, and Technical Architect when the team doesn't have dedicated resources.
+- **Skills, not monoliths.** Each phase is a standalone skill file. Claude loads only what it needs — no wasted tokens, no context pollution.
+- **Evidence-based, never assumed.** Every decision, estimation, and scope change traces back to documented evidence.
+- **Architecture before estimation.** You can't estimate accurately without knowing the stack, environments, CI/CD, and team roles.
+- **Visual prototypes sell projects.** Clickable HTML with inline SVGs, CSS variables, and realistic data. Clients believe it's a working app.
+- **Estimation includes everything.** Not just code — infra per environment, CI/CD, DevOps, QA, learning curve, bug buffer, all mapped to team members.
+- **Scope changes are auditable.** Every client answer gets logged with exact quotes, impact analysis, and before/after totals.
 - **Continuous improvement.** Every project ends with a retrospective that updates estimation factors for the next one.
 
 ---
 
 ## Document Generators
-
-EMPA includes Node.js generators that produce professional Word/PDF documents:
 
 | Generator | Command | Output |
 |-----------|---------|--------|

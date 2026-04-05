@@ -18,19 +18,20 @@ cd EMPA-ProjectName
 
 ---
 
-## Step 2: Create a Claude.ai Project
+## Step 2: Open in Claude Code
 
-1. Go to [claude.ai](https://claude.ai) → **Projects** → **New Project**
-2. Name it the same: `EMPA-ProjectName`
-3. Open `docs/claude-project-instructions.md` from your repo
-4. Copy everything under **"## Instructions (copy from here)"**
-5. Paste it into the Project's **custom instructions**
+Open the repo directory in Claude Code. Claude reads `CLAUDE.md` automatically and knows:
+- What EMPA is
+- What phases and skills are available
+- What rules to follow
+
+No additional setup needed. No Claude.ai Projects, no custom instructions to paste.
 
 ---
 
 ## Step 3: Upload Context
 
-Upload everything you have about the project into the Claude.ai Project:
+Have everything about the project ready:
 - Client emails or briefs
 - SOW (Statement of Work) if available
 - Technical documents, API docs, existing system diagrams
@@ -43,13 +44,15 @@ The more context Claude has, the better the discovery and architecture phases wi
 
 ## Step 4: Start Discovery
 
-Open a conversation in the Claude.ai Project and say:
+Tell Claude:
 
 > "We have a new EMPA project. Here's what we know: [paste or describe everything you know about the project]"
 
-Claude will start asking questions to understand the full scope. Answer them. When Claude has enough info, it will generate the **project charter**.
+Claude loads the `run-discovery` skill and starts asking questions (2-3 at a time). When Claude has enough info, it generates:
+- **`project-charter.md`** — the scope, stakeholders, constraints, risks
+- **`discovery-questions.md`** — open questions that need client answers
 
-Review the charter with your team. When approved, move to architecture.
+Review with your team. When approved, move to architecture.
 
 ---
 
@@ -59,9 +62,9 @@ Tell Claude:
 
 > "Charter is approved. Let's decide the architecture."
 
-Upload any technical constraints or client requirements if you haven't already. Claude will run through its internal checklists (team, stack, infra, environments, CI/CD, cost) and ask what it needs to.
+Claude loads `run-architecture`, runs through internal checklists (team, stack, infra, environments, CI/CD, cost), asks what it needs, and proposes 2-3 options.
 
-Claude will propose 2-3 architecture options. Team discusses, decides, and Claude generates the **architecture decision document**.
+Team discusses, decides, and Claude generates **`architecture-decision.md`**.
 
 ---
 
@@ -71,14 +74,14 @@ Tell Claude:
 
 > "Architecture is decided. Let's build the prototype."
 
-Claude will build a clickable HTML prototype with:
+Claude loads `build-prototype` and builds a clickable HTML prototype with:
 - Key screens (login, dashboard, core features)
-- Inline SVG icons (no external dependencies)
+- Inline SVG icons (zero external dependencies)
 - CSS variables for brand colors
 - Working navigation between screens
 - Realistic placeholder data
 
-Review with the team, iterate, and use it to impress the client.
+Review, iterate, and use it to impress the client.
 
 ---
 
@@ -88,9 +91,9 @@ Tell Claude:
 
 > "Architecture and prototype are done. Let's estimate."
 
-Claude will break down ALL work (frontend, backend, infra per environment, CI/CD, QA, learning curve, bug buffer) and map tasks to team members showing parallelization.
+Claude loads `run-estimation` and breaks down ALL work (frontend, backend, infra per environment, CI/CD, QA, learning curve, bug buffer), maps tasks to team members, and defines MVP with MoSCoW.
 
-Claude defines the MVP using MoSCoW prioritization and produces the **estimation document**.
+Output: **`estimation.md`**
 
 ---
 
@@ -100,7 +103,13 @@ During the project, check in weekly:
 
 > "Here's what we did this week: [summary of completed tasks and hours]"
 
-Claude generates the **weekly status report**, tracks estimated vs actual hours, and flags drift.
+Claude loads `run-execution` and generates **`weekly-status-wXX.md`** with estimated vs actual hours, drift tracking, and risk flags.
+
+For scope changes triggered by client answers:
+
+> "Client answered questions X-Y. Let's update the estimation."
+
+Claude loads `track-scope-changes` and handles the audit trail.
 
 ---
 
@@ -110,7 +119,7 @@ After delivery:
 
 > "Project is done. Final hours: [data by module and person]. Let's reflect."
 
-Claude analyzes everything and generates **lessons learned** with updated estimation factors for future projects.
+Claude loads `run-retrospective` and generates **`lessons-learned.md`** with updated estimation factors for future projects.
 
 ---
 
@@ -123,32 +132,8 @@ Claude analyzes everything and generates **lessons learned** with updated estima
 | Prototype | "Architecture is decided. Let's build the prototype." |
 | Estimate | "Architecture and prototype are done. Let's estimate." |
 | Execute | "Here's what we did this week: [summary]" |
+| Scope Change | "Client answered questions [X-Y]. Let's update." |
 | Reflect | "Project is done. Final hours: [data]. Let's reflect." |
-
----
-
-## File Checklist
-
-After a complete EMPA project, your repo should contain:
-
-```
-EMPA-ProjectName/
-├── docs/
-│   ├── project-charter.md          <- Phase 1 output
-│   ├── architecture-decision.md    <- Phase 2 output
-│   ├── estimation.md               <- Phase 3 output
-│   ├── weekly-status-w01.md        <- Phase 4 output (per week)
-│   ├── weekly-status-w02.md
-│   └── lessons-learned.md          <- Phase 5 output
-├── prototype/
-│   ├── index.html                  <- Login / landing
-│   ├── dashboard.html              <- Dashboard / home
-│   ├── feature-1.html              <- Core feature
-│   ├── css/
-│   │   └── prototype.css           <- Styles
-│   └── img/
-└── README.md
-```
 
 ---
 

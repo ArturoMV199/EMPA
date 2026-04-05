@@ -1,78 +1,83 @@
-# CLAUDE.md
+# CLAUDE.md — EMPA
 
 This file is read automatically by Claude Code at the start of every session.
-It provides project context, EMPA methodology state, and decision history so Claude never starts from zero.
+It is the map — read this first, always.
 
 ---
 
-## What is this project?
+## What is EMPA?
 
-This is an **EMPA (Estimation Methodology Plus Assessments)** template repository. EMPA is a framework where Claude acts as an active team member driving discovery, architecture, prototyping, estimation, and tracking through conversation.
+**Estimation Methodology Plus Assessments** — an AI-assisted framework for small consulting teams (2-5 people). Claude acts as an active team member driving discovery, architecture, prototyping, estimation, tracking, and documentation.
 
-Full methodology: `docs/methodology.md`
-Claude instructions: `docs/claude-project-instructions.md`
-Output formats: `docs/output-formats.md`
-Quick start: `docs/quick-start.md`
+You bring the context. Claude asks the questions, recommends the stack, builds the prototype, estimates the work, and tracks the project.
 
----
-
-## EMPA Phases
-
-```
-1. Discover   → project-charter.md
-2. Architect  → architecture-decision.md
-2B. Prototype → prototype/ folder (HTML + inline SVGs + CSS variables)
-3. Estimate   → estimation.md
-3B. Scope Changes → docs/SC_XXX/scope-changes.json → scope-changes.pdf/docx (ongoing)
-4. Execute    → weekly-status.md (per week)
-5. Reflect    → lessons-learned.md
-```
+**Everything happens in Claude Code.** One tool, one workflow.
 
 ---
 
-## Current Project State
+## Phases and Skills
 
-**Status:** Template repository — no active project yet
-**Current Phase:** N/A
-**Last Updated:** 2026-02-24
+Each phase has its own skill file. Load only the skill for the current phase.
 
-<!-- 
-When using this template for a real project, update this section:
-
-**Status:** Active
-**Project Name:** EMPA-[ProjectName]
-**Client:** [Name]
-**Current Phase:** [Discover / Architect / Prototype / Estimate / Execute / Reflect]
-**Last Updated:** [Date]
-
-### Decisions Made
-- [Date] Charter approved: [summary]
-- [Date] Architecture decided: [stack summary]
-- [Date] Prototype delivered: [screens built]
-- [Date] Estimation approved: [total hours, MVP scope]
-
-### Current Sprint/Week
-- Week [#]: [focus area]
-- Blockers: [any blockers]
-- Next: [what's coming]
-
-### Key Context
-- Team: [names and roles]
-- Stack: [tech stack summary]
-- Environments: [Dev/Test/Staging/Prod]
-- CI/CD: [platform and strategy]
-- Repo: [GitHub URL]
--->
+| Phase | Skill | Output |
+|-------|-------|--------|
+| 1. Discover | `skills/run-discovery.md` | `project-charter.md`, `discovery-questions.md` |
+| 2. Architect | `skills/run-architecture.md` | `architecture-decision.md` |
+| 2B. Prototype | `skills/build-prototype.md` | `prototype/` |
+| 3. Estimate | `skills/run-estimation.md` | `estimation.md` |
+| 3B. Scope Changes | `skills/track-scope-changes.md` | `docs/SC_XXX/` |
+| 4. Execute | `skills/run-execution.md` | `weekly-status-wXX.md` |
+| 5. Reflect | `skills/run-retrospective.md` | `lessons-learned.md` |
 
 ---
 
-## Rules for Claude
+## Project Context
+
+→ `contexts/empa-project.md`
+
+This file tracks the active project state: current phase, decisions made, totals, and which skills are wired. Read it to know where the project stands.
+
+---
+
+## Rules
 
 - **Language:** Documents and deliverables in English. Conversation can be in Spanish.
-- **Prototypes:** Raw HTML + custom CSS. Inline SVG icons ONLY — never Font Awesome or external icon CDNs. CSS variables for brand colors. Fictional/invented placeholder data (never use real client data unless explicitly provided).
-- **Estimation:** Include ALL work — infra per environment, CI/CD, DevOps, QA, learning curve, bug buffer. Map tasks to team members.
-- **Scope Changes:** Every client answer gets logged in `scope-changes.json` — even 0-impact confirmations. Always quote the client's exact answer as evidence. Regenerate PDF/Word after each batch.
-- **EMPA is internal only:** Never include "EMPA" in client-facing deliverables (docs, PDFs, presentations). Use only the project name (e.g. "ReMarkets") and "Simpat Tech".
-- **Never change hours silently:** Always verify against official documents, flag discrepancies before acting, and get explicit approval before modifying any estimation figures.
-- **Always read** `docs/methodology.md` before starting any EMPA phase.
-- **Update this file** after every major decision or phase completion. When a new rule is created that affects deliverables or workflow, add it here too.
+- **EMPA is internal only:** Never include "EMPA" in client-facing deliverables. Use only the project name and company name.
+- **Never change hours silently:** Verify against official documents, flag discrepancies, get explicit approval before modifying estimation figures.
+- **Prototypes:** Raw HTML + custom CSS. Inline SVG icons ONLY — no external icon CDNs. CSS variables for brand colors. Fictional placeholder data.
+- **Evidence-based:** Every decision, estimation, and scope change traces back to documented evidence. No hallucinating, no assuming.
+- **Human in the loop:** Always. Back-and-forth until the human confirms. No autonomous execution without approval.
+- **Read the skill first:** Before starting any phase, read the corresponding skill file. Follow the process exactly.
+
+---
+
+## Document Generators
+
+| Generator | Command | Output |
+|-----------|---------|--------|
+| Scope Changes | `node docs/gen-scope-changes.js SC_001` | `docs/SC_001/scope-changes.docx` |
+| Estimation | `node docs/gen-estimation.js` | `docs/estimation.docx` |
+
+Convert to PDF: `libreoffice --headless --convert-to pdf <file.docx> --outdir <folder>`
+
+---
+
+## Project Configuration
+
+```yaml
+project_name: ""           # e.g., "EMPA-ReMarkets"
+client: ""                 # Client name
+tech_lead: ""              # Name of tech lead
+team_size: 0               # Number of team members
+created: ""                # Date of project start
+```
+
+---
+
+## Getting Started
+
+1. Clone this template as `EMPA-ProjectName`
+2. Open the repo in Claude Code
+3. Tell Claude: "We have a new EMPA project. Here's what we know: [context]"
+4. Claude reads this file, loads `run-discovery` skill, and starts asking questions
+5. Follow the phases in order — each skill tells you what to do next
